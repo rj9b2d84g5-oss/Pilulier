@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover">
 <title>Mon Pilulier</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#EADFF6">
+<meta name="theme-color" content="#EDE6F7">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -15,38 +15,39 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{
-  font-family:'Comic Sans MS','Chalkboard SE','Marker Felt',cursive;
+  font-family:'Georgia',serif;
   min-height:100vh;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   padding:calc(1.5rem + env(safe-area-inset-top)) 1rem calc(1.5rem + env(safe-area-inset-bottom));
   transition:background-color 1s ease;
-  background-color:#EADFF6;
+  background-color:#EDE6F7;
 }
-body.alert{background-color:#F6DCE8}
+body.alert{background-color:#E8C4DC}
 
-.container{width:100%;max-width:440px;display:flex;flex-direction:column;align-items:center;gap:1.4rem}
+.container{width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center;gap:1.6rem}
 
 header{text-align:center}
-.title{
-  font-size:1.6rem;color:#5A3A1E;font-weight:700;letter-spacing:.02em;
-  text-shadow:1px 1px 0 rgba(255,255,255,.6);
-}
-.date{font-size:.8rem;color:#8A6A88;margin-top:4px}
+.title{font-size:1.4rem;color:#4A3563;font-weight:400;letter-spacing:.06em}
+.date{font-size:.78rem;color:#8A75A8;margin-top:4px;font-family:sans-serif}
 
 .pillbox{
   width:100%;
-  padding:6px 4px;
+  background:linear-gradient(160deg,#D6CCE8 0%,#BDAFD9 100%);
+  border-radius:22px;
+  padding:16px 12px;
   display:flex;
   flex-direction:column;
-  gap:14px;
+  gap:10px;
+  box-shadow:0 8px 24px rgba(70,50,110,.22),inset 0 1px 2px rgba(255,255,255,.45);
 }
 
+/* Row of 3 */
 .row{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:10px;
-  justify-items:center;
 }
+/* Last row: 1 item centered */
 .row.last{
   display:flex;
   justify-content:center;
@@ -56,78 +57,131 @@ header{text-align:center}
 }
 
 .slot{
-  display:flex;flex-direction:column;align-items:center;gap:4px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
   cursor:pointer;
   -webkit-tap-highlight-color:transparent;
-  width:100%;
 }
 
 .day-tag{
-  font-size:.8rem;font-weight:700;
-  color:#5A3A1E;
-  letter-spacing:.02em;
+  font-family:sans-serif;font-size:.65rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.06em;
+  color:#6B4C8F;
 }
 
-.jar-wrap{
-  width:100%;aspect-ratio:1/1.2;
+.box-wrap{
+  width:100%;aspect-ratio:1/1.1;
   position:relative;
-  transition:transform .2s;
+  perspective:300px;
 }
-.slot:active .jar-wrap{transform:scale(.96)}
 
-.jar-svg{width:100%;height:100%;display:block;overflow:visible}
-
-.heart{
-  transition:transform .18s ease, opacity .2s;
-  transform-origin:center;
-  transform-box:fill-box;
+.tray{
+  position:absolute;inset:0;
+  border-radius:10px;
+  background:linear-gradient(170deg,#E6DCF4 0%,#CFC0E6 100%);
+  box-shadow:
+    0 4px 10px rgba(70,50,110,.22),
+    inset 0 -3px 6px rgba(70,50,110,.18),
+    inset 0 2px 4px rgba(255,255,255,.5);
+  display:flex;align-items:center;justify-content:center;
 }
-.slot:hover .heart{transform:scale(1.08)}
+
+.cavity{
+  width:72%;height:55%;
+  border-radius:8px;
+  background:linear-gradient(145deg,#B0A0CE,#C3B3DD);
+  box-shadow:inset 0 3px 8px rgba(55,35,90,.32);
+  display:flex;align-items:center;justify-content:center;
+}
+.cavity.empty{
+  background:linear-gradient(145deg,#9E8CC0,#AE9CCD);
+  box-shadow:inset 0 4px 10px rgba(40,25,70,.38);
+}
+
+.pill{
+  width:62%;height:52%;
+  border-radius:50%;
+  position:relative;display:flex;overflow:hidden;
+  transition:transform .12s;
+}
+.pill:hover{transform:scale(1.12)}
+.pill-l{flex:1;background:linear-gradient(135deg,#A88BD0,#7E5EB8)}
+.pill-r{flex:1;background:linear-gradient(135deg,#F5EFFA,#DCD0EC)}
+.pill::after{
+  content:'';position:absolute;top:18%;left:12%;
+  width:40%;height:28%;
+  background:rgba(255,255,255,.32);
+  border-radius:50%;transform:rotate(-25deg);
+}
+.pill.pop-out{animation:popOut .38s ease forwards}
+.pill.pop-in {animation:popIn  .42s ease forwards}
+@keyframes popOut{
+  0%  {transform:scale(1);opacity:1}
+  45% {transform:scale(1.35) rotate(-10deg);opacity:1}
+  80% {transform:scale(.5) rotate(15deg);opacity:.4}
+  100%{transform:scale(0);opacity:0}
+}
+@keyframes popIn{
+  0%  {transform:scale(0) rotate(-20deg);opacity:0}
+  55% {transform:scale(1.18) rotate(6deg);opacity:.9}
+  78% {transform:scale(.95) rotate(-3deg);opacity:1}
+  100%{transform:scale(1) rotate(0);opacity:1}
+}
 
 .lid{
-  transform-origin:50% 92%;
-  transform-box:fill-box;
-  transition:transform .55s cubic-bezier(.5,-.3,.3,1.3);
+  position:absolute;inset:0;
+  border-radius:10px;
+  transform-origin:top center;
+  transform-style:preserve-3d;
+  transform:rotateX(0deg);
+  transition:transform .55s cubic-bezier(.4,0,.2,1),box-shadow .55s ease;
+  will-change:transform;
+  z-index:10;
+  background:linear-gradient(175deg,rgba(236,226,247,.92) 0%,rgba(206,190,230,.88) 60%,rgba(182,165,212,.85) 100%);
+  box-shadow:
+    0 6px 14px rgba(70,50,110,.26),
+    0 2px 4px rgba(70,50,110,.18),
+    inset 0 1px 3px rgba(255,255,255,.6),
+    inset 0 -1px 2px rgba(70,50,110,.15);
 }
+.lid::before{
+  content:'';
+  position:absolute;bottom:18%;left:50%;
+  transform:translateX(-50%);
+  width:38%;height:4px;
+  border-radius:2px;
+  background:rgba(255,255,255,.55);
+}
+
 .slot.open .lid{
-  transform:translateY(-8%) rotate(-28deg);
+  transform:rotateX(-165deg);
+  box-shadow:0 2px 6px rgba(70,50,110,.15),inset 0 1px 3px rgba(255,255,255,.4);
 }
 
-.heart.pop-out{animation:popOut .45s ease forwards}
-@keyframes popOut{
-  0%  {transform:scale(1) rotate(0);opacity:1}
-  35% {transform:scale(1.45) rotate(-15deg);opacity:1}
-  70% {transform:scale(.6)  rotate(18deg);opacity:.5}
-  100%{transform:scale(0)   rotate(30deg);opacity:0}
+.slot.today .tray{
+  box-shadow:
+    0 0 0 2.5px #7E5EB8,
+    0 4px 10px rgba(70,50,110,.25),
+    inset 0 -3px 6px rgba(70,50,110,.18),
+    inset 0 2px 4px rgba(255,255,255,.5);
 }
-
-.slot.today .jar-body{
-  filter:drop-shadow(0 0 6px rgba(190,120,170,.65));
+body.alert .slot.today .tray{
+  box-shadow:
+    0 0 0 2.5px #F5EAF2,
+    0 4px 10px rgba(70,50,110,.25),
+    inset 0 -3px 6px rgba(70,50,110,.18),
+    inset 0 2px 4px rgba(255,255,255,.5);
 }
 
 .message-area{
   text-align:center;padding:.85rem 1.4rem;
-  background:rgba(255,255,255,.5);
-  border-radius:22px;max-width:340px;
-  border:2px solid rgba(90,58,30,.18);
+  background:rgba(248,243,255,.55);
+  border-radius:16px;max-width:340px;
   transition:background .8s ease;
 }
-body.alert .message-area{background:rgba(255,240,248,.55)}
-.msg-emoji{font-size:1.5rem;margin-bottom:4px}
-.msg-text{
-  font-size:.92rem;color:#5A3A1E;line-height:1.5;
-  font-family:'Georgia',serif;font-style:italic;
-}
-
-.today-badge{
-  position:absolute;top:-14px;right:-6px;
-  font-size:1.1rem;
-  animation:sparkle 1.6s ease-in-out infinite;
-}
-@keyframes sparkle{
-  0%,100%{transform:scale(1) rotate(0);opacity:.9}
-  50%    {transform:scale(1.2) rotate(15deg);opacity:1}
-}
+body.alert .message-area{background:rgba(255,245,252,.35)}
+.msg-emoji{font-size:1.3rem;margin-bottom:5px}
+.msg-text{font-size:.88rem;color:#4A3563;line-height:1.55;font-style:italic;transition:color .8s}
+body.alert .msg-text{color:#4A3563}
 </style>
 </head>
 <body>
@@ -138,68 +192,18 @@ body.alert .message-area{background:rgba(255,240,248,.55)}
   </header>
   <div class="pillbox" id="pillbox"></div>
   <div class="message-area">
-    <div class="msg-emoji" id="emojiMsg">🌸</div>
+    <div class="msg-emoji" id="emojiMsg">🌿</div>
     <div class="msg-text" id="messageText">Chargement…</div>
   </div>
 </div>
 
-<template id="jarTpl">
-<svg class="jar-svg" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
-  <!-- Jar body -->
-  <path class="jar-body"
-        d="M22,44
-           Q20,42 20,46
-           L20,104
-           Q20,112 28,114
-           L72,114
-           Q80,112 80,104
-           L80,46
-           Q80,42 78,44
-           Z"
-        fill="#FFFDF7" stroke="#5A3A1E" stroke-width="2.8" stroke-linejoin="round"/>
-  <!-- Hearts inside (decoration, always visible faintly when taken) -->
-  <g class="hearts-group"></g>
-  <!-- Main heart (the 'pill') -->
-  <path class="heart main-heart"
-        d="M50,92
-           C42,82 30,80 30,70
-           C30,63 36,59 42,60
-           C46,61 49,64 50,68
-           C51,64 54,61 58,60
-           C64,59 70,63 70,70
-           C70,80 58,82 50,92 Z"
-        fill="#F28FB7" stroke="#5A3A1E" stroke-width="2.4" stroke-linejoin="round"/>
-  <!-- Jar neck -->
-  <path d="M30,44 L30,38 Q30,34 34,34 L66,34 Q70,34 70,38 L70,44 Z"
-        fill="#FFFDF7" stroke="#5A3A1E" stroke-width="2.8" stroke-linejoin="round"/>
-  <!-- Lid -->
-  <g class="lid">
-    <path d="M24,34
-             Q22,18 30,14
-             L70,14
-             Q78,18 76,34 Z"
-          fill="#F4B8CE" stroke="#5A3A1E" stroke-width="2.8" stroke-linejoin="round"/>
-    <!-- lid lines -->
-    <path d="M34,18 L34,30 M42,18 L42,30 M50,18 L50,30 M58,18 L58,30 M66,18 L66,30"
-          stroke="#5A3A1E" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-  </g>
-</svg>
-</template>
-
 <script>
 const DAYS=['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
-const KEY='pillbox_v5';
+const KEY='pillbox_v4';
 const MSG_OK=['Bravo ! Tu prends soin de toi, et c\'est magnifique.','Ta pilule du jour est prise. Continue comme ça !','Belle journée en perspective. Ton corps te remercie.','Tout est en ordre. Prends soin de toi aujourd\'hui.'];
 const MSG_ALERT=['N\'oublie pas ta pilule d\'aujourd\'hui, elle t\'attend !','Hey toi ! Un petit geste pour ta santé, ça ne prend qu\'une seconde.','Ta pilule du jour est encore là. Pense à la prendre !'];
-const EMO_OK=['🌸','✨','💖','🌷','🦋'];
-const EMO_ALERT=['🔔','💕','💊','🌼'];
-// Small decorative hearts floating in the jar (position + fill variants)
-const DECO=[
-  {x:36,y:78,s:.35,c:'#FADCEB'},
-  {x:64,y:80,s:.35,c:'#F4B8CE'},
-  {x:40,y:104,s:.3,c:'#F4B8CE'},
-  {x:60,y:104,s:.3,c:'#FADCEB'}
-];
+const EMO_OK=['🌿','🌸','✨','💛','🌼'];
+const EMO_ALERT=['🔔','⏰','💊','🌻'];
 
 function pick(a){return a[Math.floor(Math.random()*a.length)]}
 function getState(){try{const r=localStorage.getItem(KEY);if(r)return JSON.parse(r);}catch(e){}return{}}
@@ -215,88 +219,48 @@ function updateAlert(){
   document.getElementById('messageText').textContent=taken?pick(MSG_OK):pick(MSG_ALERT);
 }
 
-function heartPath(cx,cy,scale){
-  // Heart centered at cx,cy with the given scale (base size ~12 wide)
-  const s=scale;
-  const x=cx,y=cy;
-  return `M${x},${y+11*s}
-          C${x-8*s},${y+1*s} ${x-20*s},${y-1*s} ${x-20*s},${y-11*s}
-          C${x-20*s},${y-18*s} ${x-14*s},${y-22*s} ${x-8*s},${y-21*s}
-          C${x-4*s},${y-20*s} ${x-1*s},${y-17*s} ${x},${y-13*s}
-          C${x+1*s},${y-17*s} ${x+4*s},${y-20*s} ${x+8*s},${y-21*s}
-          C${x+14*s},${y-22*s} ${x+20*s},${y-18*s} ${x+20*s},${y-11*s}
-          C${x+20*s},${y-1*s} ${x+8*s},${y+1*s} ${x},${y+11*s} Z`;
-}
-
 function buildSlot(i,st,ti){
   const slot=document.createElement('div');
   slot.className='slot'+(i===ti?' today':'')+(st.open?' open':'');
   slot.dataset.idx=i;
 
-  const tpl=document.getElementById('jarTpl').content.cloneNode(true);
-  const wrap=document.createElement('div');
-  wrap.className='jar-wrap';
-  wrap.appendChild(tpl);
+  slot.innerHTML=`
+    <div class="day-tag">${DAYS[i]}</div>
+    <div class="box-wrap">
+      <div class="tray">
+        <div class="cavity${st.taken?' empty':''}">
+          ${(st.open&&!st.taken)?`<div class="pill" data-pill="${i}"><div class="pill-l"></div><div class="pill-r"></div></div>`:''}
+        </div>
+      </div>
+      <div class="lid"></div>
+    </div>
+  `;
 
-  // Decorative background hearts inside jar
-  const g=wrap.querySelector('.hearts-group');
-  DECO.forEach(d=>{
-    const p=document.createElementNS('http://www.w3.org/2000/svg','path');
-    p.setAttribute('d',heartPath(d.x,d.y,d.s));
-    p.setAttribute('fill',d.c);
-    p.setAttribute('stroke','#5A3A1E');
-    p.setAttribute('stroke-width','1.2');
-    p.setAttribute('stroke-linejoin','round');
-    p.setAttribute('opacity','.75');
-    g.appendChild(p);
-  });
-
-  // Main heart
-  const mainHeart=wrap.querySelector('.main-heart');
-  if(st.taken) mainHeart.style.display='none';
-
-  // Day label
-  const dayTag=document.createElement('div');
-  dayTag.className='day-tag';
-  dayTag.textContent=DAYS[i];
-
-  slot.appendChild(dayTag);
-  slot.appendChild(wrap);
-
-  if(i===ti){
-    const badge=document.createElement('div');
-    badge.className='today-badge';
-    badge.textContent='✨';
-    wrap.appendChild(badge);
-  }
-
-  // Lid click toggles open state
-  const lid=wrap.querySelector('.lid');
-  lid.addEventListener('click',e=>{
+  slot.querySelector('.lid').addEventListener('click',e=>{
     e.stopPropagation();
     const s=getState();
     const cur=s[i]||{open:false,taken:false};
-    cur.open=!cur.open;
-    s[i]=cur;setState(s);
-    slot.classList.toggle('open',cur.open);
+    if(!cur.open){
+      cur.open=true;s[i]=cur;setState(s);
+      slot.classList.add('open');
+      if(!cur.taken){
+        const cav=slot.querySelector('.cavity');
+        const p=document.createElement('div');
+        p.className='pill';p.dataset.pill=i;
+        p.innerHTML='<div class="pill-l"></div><div class="pill-r"></div>';
+        p.addEventListener('click',pillClick);
+        cav.appendChild(p);
+      }
+    } else {
+      cur.open=false;s[i]=cur;setState(s);
+      slot.classList.remove('open');
+      const p=slot.querySelector('.pill');if(p)p.remove();
+    }
     updateAlert();
   });
 
-  // Heart click takes the pill (only when lid is open)
-  mainHeart.addEventListener('click',e=>{
-    e.stopPropagation();
-    const s=getState();
-    const cur=s[i]||{open:false,taken:false};
-    if(!cur.open || cur.taken) return;
-    mainHeart.classList.add('pop-out');
-    mainHeart.addEventListener('animationend',()=>{
-      cur.taken=true;s[i]=cur;setState(s);
-      mainHeart.style.display='none';
-      mainHeart.classList.remove('pop-out');
-      updateAlert();
-    },{once:true});
-  });
-
+  const pillEl=slot.querySelector('.pill');
+  if(pillEl) pillEl.addEventListener('click',pillClick);
   return slot;
 }
 
@@ -306,6 +270,7 @@ function render(){
   box.innerHTML='';
   document.getElementById('dateDisplay').textContent=formatDate();
 
+  // Row 1: Lun–Mer (0,1,2), Row 2: Jeu–Sam (3,4,5), Row 3: Dim (6) centered
   [[0,1,2],[3,4,5],[6]].forEach((group,ri)=>{
     const row=document.createElement('div');
     row.className='row'+(ri===2?' last':'');
@@ -314,6 +279,23 @@ function render(){
   });
 
   updateAlert();
+}
+
+function pillClick(e){
+  e.stopPropagation();
+  const i=parseInt(e.currentTarget.dataset.pill);
+  const s=getState();
+  const cur=s[i]||{open:false,taken:false};
+  if(cur.taken)return;
+  const pill=document.querySelector(`.pill[data-pill="${i}"]`);
+  if(!pill)return;
+  pill.classList.add('pop-out');
+  pill.addEventListener('animationend',()=>{
+    cur.taken=true;s[i]=cur;setState(s);
+    const cav=pill.closest('.cavity');
+    if(cav){pill.remove();cav.classList.add('empty');}
+    updateAlert();
+  },{once:true});
 }
 
 render();
