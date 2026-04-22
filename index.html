@@ -95,6 +95,15 @@ header{text-align:center}
 .cavity.empty{
   background:linear-gradient(145deg,#9E8CC0,#AE9CCD);
   box-shadow:inset 0 4px 10px rgba(40,25,70,.38);
+  position:relative;
+}
+.slot.open .cavity.empty::after{
+  content:'↺';
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-family:sans-serif;font-size:1.4rem;
+  color:rgba(255,255,255,.5);
+  pointer-events:none;
 }
 
 .pill{
@@ -261,7 +270,29 @@ function buildSlot(i,st,ti){
 
   const pillEl=slot.querySelector('.pill');
   if(pillEl) pillEl.addEventListener('click',pillClick);
+
+  slot.querySelector('.cavity').addEventListener('click',cavityClick);
   return slot;
+}
+
+function cavityClick(e){
+  e.stopPropagation();
+  const slot=e.currentTarget.closest('.slot');
+  const i=parseInt(slot.dataset.idx);
+  const s=getState();
+  const cur=s[i]||{open:false,taken:false};
+  if(!cur.open||!cur.taken)return;
+  const cav=e.currentTarget;
+  if(cav.querySelector('.pill'))return;
+  cur.taken=false;s[i]=cur;setState(s);
+  cav.classList.remove('empty');
+  const p=document.createElement('div');
+  p.className='pill pop-in';p.dataset.pill=i;
+  p.innerHTML='<div class="pill-l"></div><div class="pill-r"></div>';
+  p.addEventListener('click',pillClick);
+  cav.appendChild(p);
+  p.addEventListener('animationend',()=>p.classList.remove('pop-in'),{once:true});
+  updateAlert();
 }
 
 function render(){
