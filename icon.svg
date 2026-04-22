@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#EADFF6"/>
+  <!-- Jar body -->
+  <path d="M150,210
+           Q146,206 146,214
+           L146,400
+           Q146,430 180,438
+           L332,438
+           Q366,430 366,400
+           L366,214
+           Q366,206 362,210 Z"
+        fill="#FFFDF7" stroke="#5A3A1E" stroke-width="10" stroke-linejoin="round"/>
+  <!-- Jar neck -->
+  <path d="M182,210 L182,186 Q182,172 196,172 L316,172 Q330,172 330,186 L330,210 Z"
+        fill="#FFFDF7" stroke="#5A3A1E" stroke-width="10" stroke-linejoin="round"/>
+  <!-- Decorative hearts inside -->
+  <path d="M200,310 C186,290 168,288 168,268 C168,254 180,246 192,250 C198,252 204,258 206,264 C208,258 214,252 220,250 C232,246 244,254 244,268 C244,288 226,290 212,310 Z"
+        fill="#FADCEB" stroke="#5A3A1E" stroke-width="6"/>
+  <path d="M320,340 C306,320 288,318 288,298 C288,284 300,276 312,280 C318,282 324,288 326,294 C328,288 334,282 340,280 C352,276 364,284 364,298 C364,318 346,320 332,340 Z"
+        fill="#F4B8CE" stroke="#5A3A1E" stroke-width="6"/>
+  <!-- Main big heart -->
+  <path d="M256,400
+           C232,372 196,368 196,334
+           C196,314 214,302 234,306
+           C244,308 252,316 256,326
+           C260,316 268,308 278,306
+           C298,302 316,314 316,334
+           C316,368 280,372 256,400 Z"
+        fill="#F28FB7" stroke="#5A3A1E" stroke-width="10" stroke-linejoin="round"/>
+  <!-- Lid -->
+  <path d="M134,172
+           Q128,110 156,90
+           L356,90
+           Q384,110 378,172 Z"
+        fill="#F4B8CE" stroke="#5A3A1E" stroke-width="10" stroke-linejoin="round"/>
+  <!-- Lid lines -->
+  <g stroke="#5A3A1E" stroke-width="7" stroke-linecap="round" fill="none">
+    <path d="M176,110 L176,160"/>
+    <path d="M216,110 L216,160"/>
+    <path d="M256,110 L256,160"/>
+    <path d="M296,110 L296,160"/>
+    <path d="M336,110 L336,160"/>
+  </g>
+</svg>

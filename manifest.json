@@ -1,0 +1,19 @@
+{
+  "name": "Mon Pilulier",
+  "short_name": "Pilulier",
+  "description": "Ton pilulier hebdomadaire tout doux",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#EADFF6",
+  "theme_color": "#EADFF6",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
